@@ -1,0 +1,11 @@
+# Compiled binaries
+reversi
+a.out
+*.out
+
+# Object files (if you add them later)
+*.o
+
+# Editor / OS junk
+*~
+.DS_Store
