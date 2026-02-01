@@ -59,9 +59,11 @@ void Pmove(int boardSize, game board[boardSize][boardSize], game *curPlayer) {
     if (board[pos_x][pos_y] == VALID) {
         if (*curPlayer == BLACK) {
             board[pos_x][pos_y] = BLACK;
+            flip(boardSize, board, pos_x, pos_y, *curPlayer);
             *curPlayer = WHITE;
         } else if (*curPlayer == WHITE) {
             board[pos_x][pos_y] = WHITE;
+            flip(boardSize, board, pos_x, pos_y, *curPlayer);
             *curPlayer = BLACK;
         }
     } else {
@@ -72,3 +74,56 @@ void Pmove(int boardSize, game board[boardSize][boardSize], game *curPlayer) {
     return;
 }
 
+void flip(int boardSize, game board[boardSize][boardSize],
+    int pos_x, int pos_y, game curPlayer)
+{
+    int dirx[]={1, 1, 1, 0, -1, -1, -1, 0};
+    int diry[]={-1, 0, 1, 1, 1, 0, -1, -1};
+    game opp = curPlayer == BLACK ? WHITE : BLACK;
+
+    // Scan all directions
+
+    for (int i = 0; i < 8; i++) {   
+
+        int dx = pos_x+dirx[i];
+        int dy = pos_y+diry[i];
+        bool valid=false;
+
+
+        if ((dx>=boardSize) || (dy>=boardSize) || (dx<0) || (dy<0) || board[dx][dy] != opp)
+            continue;
+
+        while ((dx < boardSize) && (dx >= 0) && (dy < boardSize) && (dy >= 0)) {   
+            
+            for (int j = dx, k = dy; 
+                (j < boardSize) && (j >= 0) && (k < boardSize) && (k >= 0); 
+                j += dirx[i], k += diry[i]) 
+            {
+                if (board[j][k] == EMPTY)
+                    break;
+                if (board[j][k] == VALID)
+                    break;
+                
+                if (board[j][k] == curPlayer) {
+                    valid=true;
+                    break;
+                }
+            }
+
+            if (!valid)
+                break;
+            
+            if (board[dx][dy] == opp)
+                board[dx][dy] = curPlayer;
+
+            dx+=dirx[i];
+            dy+=diry[i];
+
+            if (board[dx][dy] == curPlayer)
+                break;
+
+        }
+
+    }
+    return;
+}

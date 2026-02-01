@@ -11,5 +11,7 @@ bool checkValid(int boardSize, game board[boardSize][boardSize],
 
 void Pmove(int boardSize, game board[boardSize][boardSize], game *curPlayer);
 
-            
-#endif
+void flip(int boardSize, game board[boardSize][boardSize],
+    int pos_x, int pos_y, game curPlayer);          
+
+    #endif
