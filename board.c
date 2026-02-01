@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include "board.h"
+#include "logic.h"
 
-char tochar(board b) {
+char tochar(game b) {
     switch (b)
     {
     case EMPTY:
@@ -13,13 +15,16 @@ char tochar(board b) {
     case WHITE:
         return 'O';
         break;
+    case VALID:
+        return '*';
+        break;
     default:
         return '?';
         break;
 }
 }
 
-void boardInit(int boardSize, board board[boardSize][boardSize]) {
+void boardInit(int boardSize, game board[boardSize][boardSize]) {
 
     int pos_y, pos_x;
 
@@ -55,17 +60,45 @@ void boardInit(int boardSize, board board[boardSize][boardSize]) {
     return;
 }
 
-void boardPrint(int boardSize, board board[boardSize][boardSize]) {
+void boardPrint(int boardSize, game board[boardSize][boardSize], game curPlayer
+) {
     
     int pos_y, pos_x;
+
+    // Reset all VALID positions
+    for (pos_y = 0; pos_y < boardSize; pos_y++) {
+        
+        for (pos_x = 0; pos_x < boardSize; pos_x++) {
+            
+            if (board[pos_x][pos_y]==VALID)
+                board[pos_x][pos_y]=EMPTY;
+        }
+
+    }
+
+    // Check all positions
+    for (pos_y = 0; pos_y < boardSize; pos_y++) {
+        
+        for (pos_x = 0; pos_x < boardSize; pos_x++) {
+            
+            bool isValid=checkValid(boardSize, board, pos_x, pos_y, curPlayer);
+        
+            if (isValid)
+                board[pos_x][pos_y] = VALID;
+        }
+    }
+
+    printf("\n   0 1 2 3 4 5 6 7\n");
     
     //Loop to output current board status
     for (pos_y = 0; pos_y < boardSize; pos_y++) {
-
+        
+        printf("%d  ", pos_y);
+        
         for (pos_x = 0; pos_x < boardSize; pos_x++) {
             printf("%c ", tochar(board [pos_x][pos_y]));
         }
-
+        
         printf("\n");
 
     }

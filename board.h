@@ -4,13 +4,13 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-typedef enum board {EMPTY, BLACK, WHITE} board;
+typedef enum game {EMPTY, BLACK, WHITE, VALID} game;
 
-char tochar(board b);
+char tochar(game b);
 
-void boardInit(int boardSize, board board[boardSize][boardSize]);
+void boardInit(int boardSize, game board[boardSize][boardSize]);
 
-void boardPrint(int boardSize, board board[boardSize][boardSize]);
+void boardPrint(int boardSize, game board[boardSize][boardSize], game curPlayer);
 
 
 #endif
