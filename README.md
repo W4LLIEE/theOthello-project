@@ -5,7 +5,7 @@
 
 The repository is created early to capture planning, structure, and progress as the project evolves.
 
-At the moment, the project is in the **planning phase**.
+At the moment, the project is in the **development phase**.
 
 ---
 
