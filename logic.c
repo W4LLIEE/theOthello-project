@@ -44,18 +44,30 @@ bool checkValid(int boardSize, game board[boardSize][boardSize],
     } return false;
 }
 
-void Pmove(int boardSize, game board[boardSize][boardSize], game *curPlayer) {
+void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer) {
     
     // Player moves
     int pos_x, pos_y;
     bool isValid;
 
-    printf("%s's turn. Make your move (posX posY): ", 
+    printf("\n%s's turn. Make your move (posX posY): ", 
             *curPlayer == BLACK ? "Black" : "White");
 
-    scanf("%d %d", &pos_x, &pos_y);
+    // Take and Check input
+    int result = scanf("%d %d", &pos_x, &pos_y);
     
     
+    if (result != 2) {
+        printf("Invalid input. Please enter two numbers.\n");
+
+        // clear bad input
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+        return;
+    }
+
+    // Play move if valid
     if (board[pos_x][pos_y] == VALID) {
         if (*curPlayer == BLACK) {
             board[pos_x][pos_y] = BLACK;
@@ -67,7 +79,7 @@ void Pmove(int boardSize, game board[boardSize][boardSize], game *curPlayer) {
             *curPlayer = BLACK;
         }
     } else {
-        printf("Invalid move.\n%s's turn. Make your move (posX posY): ", 
+        printf("\nInvalid move.\n%s's turn. Make your move (posX posY): ", 
                 *curPlayer == BLACK ? "Black" : "White");
     }
 
@@ -126,4 +138,39 @@ void flip(int boardSize, game board[boardSize][boardSize],
 
     }
     return;
+}
+
+void countScore(int boardSize, game board[boardSize][boardSize], int *blkPts, int *whtPts, game *winner) {
+
+    int pos_y, pos_x;
+    *blkPts=0;
+    *whtPts=0;
+    for (pos_y = 0; pos_y < boardSize; pos_y++) {
+        
+        for (pos_x = 0; pos_x < boardSize; pos_x++) {
+            if (board[pos_x][pos_y]==BLACK)
+                (*blkPts)++;
+            if (board[pos_x][pos_y]==WHITE)
+                (*whtPts)++;
+        }
+
+    }
+
+    if ((*blkPts)>(*whtPts)) {*winner=BLACK;} 
+    else if ((*blkPts)<(*whtPts)){*winner=WHITE;}
+    else {*winner=EMPTY;}
+}
+
+bool gameOver(int boardSize, game board[boardSize][boardSize]) {
+    int pos_y, pos_x;
+
+    for (pos_y = 0; pos_y < boardSize; pos_y++) {
+        
+        for (pos_x = 0; pos_x < boardSize; pos_x++) {
+            if (board[pos_x][pos_y]==EMPTY)
+                return false;
+        }
+
+    }
+    return true;
 }

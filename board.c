@@ -60,8 +60,7 @@ void boardInit(int boardSize, game board[boardSize][boardSize]) {
     return;
 }
 
-void boardPrint(int boardSize, game board[boardSize][boardSize], game curPlayer
-) {
+void boardPrint(int boardSize, game board[boardSize][boardSize], game curPlayer) {
     
     int pos_y, pos_x;
 
