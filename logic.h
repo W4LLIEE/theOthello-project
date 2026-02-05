@@ -9,7 +9,9 @@
 bool checkValid(int boardSize, game board[boardSize][boardSize],
     int pos_x, int pos_y, game curPlayer);
 
-void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer);
+void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip);
+
+void scanValid(int boardSize, game board[boardSize][boardSize], game curPlayer);
 
 void flip(int boardSize, game board[boardSize][boardSize],
     int pos_x, int pos_y, game curPlayer);          

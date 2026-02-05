@@ -64,29 +64,6 @@ void boardPrint(int boardSize, game board[boardSize][boardSize], game curPlayer)
     
     int pos_y, pos_x;
 
-    // Reset all VALID positions
-    for (pos_y = 0; pos_y < boardSize; pos_y++) {
-        
-        for (pos_x = 0; pos_x < boardSize; pos_x++) {
-            
-            if (board[pos_x][pos_y]==VALID)
-                board[pos_x][pos_y]=EMPTY;
-        }
-
-    }
-
-    // Check all positions
-    for (pos_y = 0; pos_y < boardSize; pos_y++) {
-        
-        for (pos_x = 0; pos_x < boardSize; pos_x++) {
-            
-            bool isValid=checkValid(boardSize, board, pos_x, pos_y, curPlayer);
-        
-            if (isValid)
-                board[pos_x][pos_y] = VALID;
-        }
-    }
-
     printf("\n   0 1 2 3 4 5 6 7\n");
     
     //Loop to output current board status
