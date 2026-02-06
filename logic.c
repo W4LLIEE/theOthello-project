@@ -33,7 +33,9 @@ bool checkValid(int boardSize, game board[boardSize][boardSize],
         while ((dx < boardSize) && (dx >= 0) && (dy < boardSize) && (dy >= 0))
         {
             if (board[dx][dy] == EMPTY)
-                    break;
+                break;
+            if (board[dx][dy] == VALID)
+                break;
         
             if (board[dx][dy] == curPlayer)
                 return true;

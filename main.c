@@ -12,6 +12,7 @@ int main() {
     game curPlayer = BLACK, winner;
     int blkPts=2, whtPts=2, old_blkPts, old_whtPts;
     bool firstSkip = true;
+
     
     srand(time(NULL));
     
@@ -41,7 +42,7 @@ int main() {
                 break;
             }
         
-        autoPlay(boardSize, board, &curPlayer, &firstSkip);
+        Play(boardSize, board, &curPlayer, &firstSkip);
         countScore(boardSize, board, &blkPts, &whtPts, &winner);
 
         if ((old_blkPts == blkPts) || (old_whtPts == whtPts)) {
