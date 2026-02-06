@@ -2,6 +2,8 @@
 #include "logic.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <time.h>
 
 
 bool checkValid(int boardSize, game board[boardSize][boardSize], 
@@ -205,4 +207,55 @@ bool gameOver(int boardSize, game board[boardSize][boardSize]) {
 
     }
     return true;
+}
+
+void autoPlay(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip) {
+
+
+    // Player moves
+    int pos_x, pos_y, cnt=0, random;
+    bool isValid;
+    int val_x[20], val_y[20];
+
+    for (pos_y = 0; pos_y < boardSize; pos_y++) {
+        
+        for (pos_x = 0; pos_x < boardSize; pos_x++) {
+            
+            if (board[pos_x][pos_y]==VALID) {
+                val_x[cnt] = pos_x;
+                val_y[cnt] = pos_y;
+                cnt++;
+            }
+        }
+
+    }
+
+    random = rand() % cnt;
+
+    pos_x = val_x[random];
+    pos_y = val_y[random];
+
+    printf("\n%s's turn. Make your move (posX posY): %d %d", 
+            *curPlayer == BLACK ? "Black" : "White", pos_x, pos_y);
+
+    // Play move if valid
+    if (board[pos_x][pos_y] == VALID) {
+        if (*curPlayer == BLACK) {
+            board[pos_x][pos_y] = BLACK;
+            flip(boardSize, board, pos_x, pos_y, *curPlayer);
+            *curPlayer = WHITE;
+        } else if (*curPlayer == WHITE) {
+            board[pos_x][pos_y] = WHITE;
+            flip(boardSize, board, pos_x, pos_y, *curPlayer);
+            *curPlayer = BLACK;
+        }
+    } else {
+        printf("\nInvalid move.\n%s's turn. Make your move (posX posY): ", 
+                *curPlayer == BLACK ? "Black" : "White");
+    }
+
+    // Reset turn skipping
+    *firstSkip = true;
+
+
 }

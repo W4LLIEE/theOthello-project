@@ -20,6 +20,6 @@ void countScore(int boardSize, game board[boardSize][boardSize], int *blkPts, in
 
 bool gameOver(int boardSize, game board[boardSize][boardSize]);
 
-
+void autoPlay(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip);
 
 #endif

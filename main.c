@@ -1,22 +1,28 @@
 #include "board.h"
 #include "logic.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-int main()
-{
+
+int main() {
 
     //Game Variables
     int boardSize = 8; game board [boardSize][boardSize];      //Board Dimensions
     game curPlayer = BLACK, winner;
-    int blkPts=2, whtPts=2;
+    int blkPts=2, whtPts=2, old_blkPts, old_whtPts;
     bool firstSkip = true;
+    
+    srand(time(NULL));
     
     boardInit(boardSize, board);
     
     while (1) {
 
         scanValid(boardSize, board, curPlayer);
-        printf("\nSCORE\nBLACK : %d\t|\tWHITE : %d\n", blkPts, whtPts);
+        old_blkPts = blkPts;
+        old_whtPts = whtPts;
+        printf("\n\nSCORE\nBLACK : %d\t|\tWHITE : %d\n\n", blkPts, whtPts);
         boardPrint(boardSize, board, curPlayer);
 
         if (gameOver(boardSize, board)){
@@ -35,10 +41,22 @@ int main()
                 break;
             }
         
-        Play(boardSize, board, &curPlayer, &firstSkip);
+        autoPlay(boardSize, board, &curPlayer, &firstSkip);
         countScore(boardSize, board, &blkPts, &whtPts, &winner);
-        
-        
+
+        if ((old_blkPts == blkPts) || (old_whtPts == whtPts)) {
+            printf("\nSCORE\nBLACK : %d\t|\tWHITE : %d\n", blkPts, whtPts);
+            boardPrint(boardSize, board, curPlayer);
+            printf("ERROR - NO PIECES FLIPPED");
+            break;
+        }
+
+        if (!((old_blkPts+old_whtPts+1)==(blkPts+whtPts))) {
+            printf("\nSCORE\nBLACK : %d\t|\tWHITE : %d\n", blkPts, whtPts);
+            boardPrint(boardSize, board, curPlayer);
+            printf("ERROR - PIECES DONT ADD UP");
+            break;
+        }
         
     }
 
