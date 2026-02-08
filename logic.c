@@ -49,16 +49,18 @@ bool checkValid(int boardSize, game board[boardSize][boardSize],
     } return false;
 }
 
-void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid) {
+void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *exit) {
     
     // Player moves
     int pos_x, pos_y;
     bool isValid;
-    *invalid=false;
+    char ex[] = "ex", EX[] = "EX"; 
+    *invalid = false;
+    *exit = false;
 
     char input[3];
 
-    printf("\n  %s's turn. Make your move (A1): ", 
+    printf("\n  %s's turn. Make your move (Enter 'EX' to exit): ", 
             *curPlayer == BLACK ? "Black" : "White");
 
     // Take and Check input
@@ -66,6 +68,10 @@ void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool
     char c;
     while ((c = getchar()) != '\n' && c != EOF);
 
+    if (strcmp(input, EX)==0 || strcmp(input, ex)==0) {
+        *exit=true;
+        return;
+    }
     pos_x = input[0]-65;
     pos_y = input[1]-49;
 

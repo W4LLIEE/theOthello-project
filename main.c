@@ -58,7 +58,7 @@ void computer(int boardSize, game board[boardSize][boardSize], game curPlayer, i
 void human(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
         int old_whtPts, int whtPts, bool firstSkip, game winner) {
 
-    bool invalid;
+    bool invalid, exit;
 
     while (1) {
 
@@ -85,8 +85,12 @@ void human(int boardSize, game board[boardSize][boardSize], game curPlayer, int 
                 break;
             }
         
-        Play(boardSize, board, &curPlayer, &firstSkip, &invalid);
+        Play(boardSize, board, &curPlayer, &firstSkip, &invalid, &exit);
         countScore(boardSize, board, &blkPts, &whtPts, &winner);
+
+        
+        if (exit)
+            break;
 
         if (invalid)
             continue;
@@ -141,41 +145,38 @@ int main() {
     while (1) {
 
         optNum=menuRun(optNum);
-
-        // scanf("%d", &optNum);
-        // while ((trash = getchar()) != '\n' && trash != EOF);
         OPT = optNum;
         
         switch(OPT) {
             case PLAY:
                 boardInit(boardSize, board);
                 human(boardSize, board, curPlayer, old_blkPts, blkPts, old_whtPts, whtPts, firstSkip, winner);
-                printf("\n\n  RETURN TO MENU\n  Enter anything to confirm: ");
+                printf("\n\n  RETURN TO MENU");       
+                enableRawMode();
                 getchar();
-                while ((trash = getchar()) && trash != EOF);
                 disableRawMode();
                 break;
             case AI:
                 boardInit(boardSize, board);
                 computer(boardSize, board, curPlayer, old_blkPts, blkPts, old_whtPts, whtPts, firstSkip, winner);
-                printf("\n\n  RETURN TO MENU\n  Enter anything to confirm: ");
+                printf("\n\n  RETURN TO MENU");
                 enableRawMode();
                 getchar();
                 disableRawMode();
                 break;
             case RULES:
                 rules();
-                printf("\n\n  RETURN TO MENU\n  Enter anything to confirm: ");
+                printf("\n\n  RETURN TO MENU");
                 enableRawMode();
                 getchar();
                 disableRawMode();
                 break;
             case EXIT:
-                printf("  Exitting Game...  \n");
+                printf("\n\n  Exitting Game...  \n\n  ");
                 return 0;
             default:
                 printf("  That's not an option.\n");
-                printf("\n\n  RETURN TO MENU\n  Enter anything to confirm: ");
+                printf("\n\n  RETURN TO MENU");
                 enableRawMode();
                 getchar();
                 disableRawMode();
