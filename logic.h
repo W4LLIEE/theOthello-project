@@ -9,7 +9,7 @@
 bool checkValid(int boardSize, game board[boardSize][boardSize],
     int pos_x, int pos_y, game curPlayer);
 
-void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip);
+void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid);
 
 void scanValid(int boardSize, game board[boardSize][boardSize], game curPlayer);
 

@@ -64,12 +64,12 @@ void boardPrint(int boardSize, game board[boardSize][boardSize], game curPlayer)
     
     int pos_y, pos_x;
 
-    printf("\n   0 1 2 3 4 5 6 7\n");
+    printf("\n     A B C D E F G H\n\n");
     
     //Loop to output current board status
     for (pos_y = 0; pos_y < boardSize; pos_y++) {
         
-        printf("%d  ", pos_y);
+        printf("  %d  ", pos_y+1);
         
         for (pos_x = 0; pos_x < boardSize; pos_x++) {
             printf("%c ", tochar(board [pos_x][pos_y]));

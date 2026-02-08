@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 
 bool checkValid(int boardSize, game board[boardSize][boardSize], 
@@ -48,43 +49,40 @@ bool checkValid(int boardSize, game board[boardSize][boardSize],
     } return false;
 }
 
-void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip) {
+void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid) {
     
     // Player moves
     int pos_x, pos_y;
     bool isValid;
+    *invalid=false;
 
-    printf("\n%s's turn. Make your move (posX posY): ", 
+    char input[3];
+
+    printf("\n  %s's turn. Make your move (A1): ", 
             *curPlayer == BLACK ? "Black" : "White");
 
     // Take and Check input
-    int result = scanf("%d %d", &pos_x, &pos_y);
-    
-    
-    if (result != 2) {
-        printf("Invalid input. Please enter two numbers.\n");
+    fgets(input, sizeof(input), stdin);
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF);
 
-        // clear bad input
-        int c;
-        while ((c = getchar()) != '\n' && c != EOF);
+    pos_x = input[0]-65;
+    pos_y = input[1]-49;
 
-        return;
-    }
 
     // Play move if valid
     if (board[pos_x][pos_y] == VALID) {
         if (*curPlayer == BLACK) {
             board[pos_x][pos_y] = BLACK;
             flip(boardSize, board, pos_x, pos_y, *curPlayer);
-            *curPlayer = WHITE;
+            *curPlayer = WHITE; 
         } else if (*curPlayer == WHITE) {
             board[pos_x][pos_y] = WHITE;
             flip(boardSize, board, pos_x, pos_y, *curPlayer);
             *curPlayer = BLACK;
         }
     } else {
-        printf("\nInvalid move.\n%s's turn. Make your move (posX posY): ", 
-                *curPlayer == BLACK ? "Black" : "White");
+                *invalid = true;
     }
 
     // Reset turn skipping
@@ -237,7 +235,7 @@ void autoPlay(int boardSize, game board[boardSize][boardSize], game *curPlayer, 
     pos_x = val_x[random];
     pos_y = val_y[random];
 
-    printf("\n%s's turn. Make your move (posX posY): %d %d", 
+    printf("\n  %s's turn. Make your move (posX posY): %d %d", 
             *curPlayer == BLACK ? "Black" : "White", pos_x, pos_y);
 
     // Play move if valid
@@ -251,9 +249,6 @@ void autoPlay(int boardSize, game board[boardSize][boardSize], game *curPlayer, 
             flip(boardSize, board, pos_x, pos_y, *curPlayer);
             *curPlayer = BLACK;
         }
-    } else {
-        printf("\nInvalid move.\n%s's turn. Make your move (posX posY): ", 
-                *curPlayer == BLACK ? "Black" : "White");
     }
 
     // Reset turn skipping
