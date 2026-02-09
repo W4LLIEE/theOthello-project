@@ -1,130 +1,12 @@
 #include "board.h"
 #include "logic.h"
+#include "menu.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
-#include "menu.h"
+#include <string.h>
 
-void computer(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
-        int old_whtPts, int whtPts, bool firstSkip, game winner) {
-
-    while (1) {
-
-        scanValid(boardSize, board, curPlayer);
-        old_blkPts = blkPts;
-        old_whtPts = whtPts;
-        printf("\n\n  SCORE\n  BLACK : %d\t|\tWHITE : %d\n\n", blkPts, whtPts);
-        boardPrint(boardSize, board, curPlayer);
-
-        if (gameOver(boardSize, board)){
-                if (firstSkip) {
-                    curPlayer = curPlayer == BLACK ? WHITE : BLACK;
-                    printf("\n  Turn Skipped.\n");
-                    firstSkip = false;
-                    continue;
-                }
-                if (winner==EMPTY) {
-                    printf("\n\n  TIE GAME\n\n");
-                    break;
-                }
-                printf("\n\n  GAME OVER\n\n  WINNER : %s\n     %d - %d\n", 
-                    winner==BLACK ? "Black" : "White", blkPts, whtPts);
-                break;
-            }
-        
-        autoPlay(boardSize, board, &curPlayer, &firstSkip);
-        countScore(boardSize, board, &blkPts, &whtPts, &winner);
-
-        if ((old_blkPts == blkPts) || (old_whtPts == whtPts)) {
-            printf("\n  SCORE\nBLACK : %d\t|\tWHITE : %d\n", blkPts, whtPts);
-            boardPrint(boardSize, board, curPlayer);
-            printf("  ERROR - NO PIECES FLIPPED");
-            break;
-        }
-
-        if (!((old_blkPts+old_whtPts+1)==(blkPts+whtPts))) {
-            printf("\n  SCORE\nBLACK : %d\t|\tWHITE : %d\n", blkPts, whtPts);
-            boardPrint(boardSize, board, curPlayer);
-            printf("  ERROR - PIECES DONT ADD UP");
-            break;
-        }
-        
-    }
-
-
-    return;
-}
-
-void human(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
-        int old_whtPts, int whtPts, bool firstSkip, game winner) {
-
-    bool invalid, exit;
-
-    while (1) {
-
-        clrScr();
-        scanValid(boardSize, board, curPlayer);
-        old_blkPts = blkPts;
-        old_whtPts = whtPts;
-        printf("\n\n  SCORE\n  BLACK : %d\t|\tWHITE : %d\n\n", blkPts, whtPts);
-        boardPrint(boardSize, board, curPlayer);
-
-        if (gameOver(boardSize, board)){
-                if (firstSkip) {
-                    curPlayer = curPlayer == BLACK ? WHITE : BLACK;
-                    printf("\n  Turn Skipped.\n");
-                    firstSkip = false;
-                    continue;
-                }
-                if (winner==EMPTY) {
-                    printf("\n\n  TIE GAME\n\n");
-                    break;
-                }
-                printf("\n\n  GAME OVER\n\nWINNER : %s\n     %d - %d\n", 
-                    winner==BLACK ? "Black" : "White", blkPts, whtPts);
-                break;
-            }
-        
-        Play(boardSize, board, &curPlayer, &firstSkip, &invalid, &exit);
-        countScore(boardSize, board, &blkPts, &whtPts, &winner);
-
-        
-        if (exit)
-            break;
-
-        if (invalid)
-            continue;
-
-        if ((old_blkPts == blkPts) || (old_whtPts == whtPts)) {
-            printf("\n  SCORE\nBLACK : %d\t|\tWHITE : %d\n", blkPts, whtPts);
-            boardPrint(boardSize, board, curPlayer);
-            printf("  ERROR - NO PIECES FLIPPED");
-            break;
-        }
-
-        if (!((old_blkPts+old_whtPts+1)==(blkPts+whtPts))) {
-            printf("\n  SCORE\nBLACK : %d\t|\tWHITE : %d\n", blkPts, whtPts);
-            boardPrint(boardSize, board, curPlayer);
-            printf("  ERROR - PIECES DONT ADD UP");
-            break;
-        }
-        
-    }
-
-
-    return;
-}
-
-void rules() {
-
-    printf("\n  ──────── Rules ────────\n\n");
-    printf("  • Players take turns placing pieces\n");
-    printf("  • Pieces must trap opponent pieces\n");
-    printf("  • Trapped pieces flip color\n");
-    printf("  • Game ends when no moves remain\n\n");
-
-    return;
-}
 
 int main() {
 
@@ -157,12 +39,7 @@ int main() {
                 disableRawMode();
                 break;
             case AI:
-                boardInit(boardSize, board);
-                computer(boardSize, board, curPlayer, old_blkPts, blkPts, old_whtPts, whtPts, firstSkip, winner);
-                printf("\n\n  RETURN TO MENU");
-                enableRawMode();
-                getchar();
-                disableRawMode();
+                subMenu(boardSize, board, curPlayer, old_blkPts, blkPts, old_whtPts, whtPts, firstSkip, winner);
                 break;
             case RULES:
                 rules();

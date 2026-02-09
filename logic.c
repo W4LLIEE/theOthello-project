@@ -1,5 +1,6 @@
 #include "board.h"
 #include "logic.h"
+#include "menu.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>

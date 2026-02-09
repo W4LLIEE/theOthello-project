@@ -1,7 +1,11 @@
-#include <stdio.h>
-#include <stdbool.h>
 #include "board.h"
 #include "logic.h"
+#include "menu.h"
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
 
 char tochar(game b) {
     switch (b)
