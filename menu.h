@@ -17,6 +17,12 @@ void computer(int boardSize, game board[boardSize][boardSize], game curPlayer, i
 void human(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
         int old_whtPts, int whtPts, bool firstSkip, game winner);
 
+void computer_easy(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
+int old_whtPts, int whtPts, bool firstSkip, game winner);
+
+void computer_med(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
+int old_whtPts, int whtPts, bool firstSkip, game winner);
+
 void rules();
 
 void enableRawMode();

@@ -263,3 +263,194 @@ void autoPlay(int boardSize, game board[boardSize][boardSize], game *curPlayer, 
 
 
 }
+
+void vsComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *exit, char *cmpInp) {
+
+
+    // Player moves
+    int pos_x, pos_y, cnt=0, random;
+    bool isValid;
+    int val_x[20], val_y[20];
+    char input[3], ex[] = "ex", EX[] = "EX";
+    *invalid = false;
+    *exit = false;
+
+    for (pos_y = 0; pos_y < boardSize; pos_y++) {
+        
+        for (pos_x = 0; pos_x < boardSize; pos_x++) {
+            
+            if (board[pos_x][pos_y]==VALID) {
+                val_x[cnt] = pos_x;
+                val_y[cnt] = pos_y;
+                cnt++;
+            }
+        }
+
+    }
+
+    if (*curPlayer == WHITE) {
+
+        random = rand() % cnt;
+
+        pos_x = val_x[random];
+        pos_y = val_y[random];
+
+        cmpInp[0] = pos_x + 65;
+        cmpInp[1] = pos_y + 49;
+        
+    } else if (*curPlayer == BLACK) {
+
+        printf("\n  %s's turn. Make your move (Enter 'EX' to exit): ", 
+                *curPlayer == BLACK ? "Black" : "White");
+
+        // Take and Check input
+        fgets(input, sizeof(input), stdin);
+        char c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+        if (strcmp(input, EX)==0 || strcmp(input, ex)==0) {
+            *exit=true;
+            return;
+        }
+        pos_x = input[0]-65;
+        pos_y = input[1]-49;
+        
+    }
+
+    // Play move if valid
+    if (board[pos_x][pos_y] == VALID) {
+        if (*curPlayer == BLACK) {
+            board[pos_x][pos_y] = BLACK;
+            flip(boardSize, board, pos_x, pos_y, *curPlayer);
+            *curPlayer = WHITE; 
+        } else if (*curPlayer == WHITE) {
+            board[pos_x][pos_y] = WHITE;
+            flip(boardSize, board, pos_x, pos_y, *curPlayer);
+            *curPlayer = BLACK;
+        }
+    } else {
+                *invalid = true;
+    }
+
+    // Reset turn skipping
+    *firstSkip = true;
+
+
+}
+
+void vsMedComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *exit, char *cmpInp, int blkPts, int whtPts) {
+
+
+    // Player moves
+    int pos_x, pos_y, cnt=0, random;
+    bool isValid;
+    int val_x[60], val_y[60];
+    char input[3], ex[] = "ex", EX[] = "EX";
+    *invalid = false;
+    *exit = false;
+
+    for (pos_y = 0; pos_y < boardSize; pos_y++) {
+        
+        for (pos_x = 0; pos_x < boardSize; pos_x++) {
+            
+            if (board[pos_x][pos_y]==VALID) {
+                val_x[cnt] = pos_x;
+                val_y[cnt] = pos_y;
+                cnt++;
+            }
+        }
+
+    }
+
+    if (*curPlayer == WHITE) {
+
+        simGame(boardSize, board, whtPts, blkPts, &pos_x, &pos_y, cnt, val_x, val_y);
+
+        cmpInp[0] = pos_x + 65;
+        cmpInp[1] = pos_y + 49;
+        
+    } else if (*curPlayer == BLACK) {
+
+        printf("\n  %s's turn. Make your move (Enter 'EX' to exit): ", 
+                *curPlayer == BLACK ? "Black" : "White");
+
+        // Take and Check input
+        fgets(input, sizeof(input), stdin);
+        char c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+        if (strcmp(input, EX)==0 || strcmp(input, ex)==0) {
+            *exit=true;
+            return;
+        }
+        pos_x = input[0]-65;
+        pos_y = input[1]-49;
+        
+    }
+
+    // Play move if valid
+    if (board[pos_x][pos_y] == VALID) {
+        if (*curPlayer == BLACK) {
+            board[pos_x][pos_y] = BLACK;
+            flip(boardSize, board, pos_x, pos_y, *curPlayer);
+            *curPlayer = WHITE; 
+        } else if (*curPlayer == WHITE) {
+            board[pos_x][pos_y] = WHITE;
+            flip(boardSize, board, pos_x, pos_y, *curPlayer);
+            *curPlayer = BLACK;
+        }
+    } else {
+                *invalid = true;
+    }
+
+    // Reset turn skipping
+    *firstSkip = true;
+
+
+}
+
+void simGame (int boardSize, game board[boardSize][boardSize],
+            int whtPts, int blkPts, int *pos_x, int *pos_y, 
+            int cnt, int val_x[cnt], int val_y[cnt]) {
+            
+    game sim_Board[boardSize][boardSize], sim_curPlayer, sim_winner;
+    int sim_blkPts, sim_whtPts;
+    int old_whtPts, gain=0, maxGain=0;
+
+    for (int i = 0; i < cnt; i++) {
+
+        for (int y = 0; y < boardSize; y++) {
+
+            for (int x = 0; x < boardSize; x++) {
+                sim_Board[x][y] = board[x][y];
+            }
+
+        }
+
+        sim_curPlayer = WHITE;
+        sim_blkPts = blkPts;
+        sim_whtPts = whtPts;
+        sim_winner = EMPTY;
+
+        old_whtPts = sim_whtPts;
+
+        int sim_pos_x = val_x[i];
+        int sim_pos_y = val_y[i];
+
+        sim_Board[sim_pos_x][sim_pos_y] = WHITE;
+        flip(boardSize, sim_Board, sim_pos_x, sim_pos_y, sim_curPlayer);
+        countScore(boardSize, sim_Board, &sim_blkPts, &sim_whtPts, &sim_winner);
+        
+        gain = sim_whtPts - old_whtPts;
+
+        if (gain > maxGain) {
+            maxGain = gain;
+            *pos_x = sim_pos_x;
+            *pos_y = sim_pos_y;
+        }
+    
+    }
+
+    return;
+    
+}

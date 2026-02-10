@@ -22,4 +22,11 @@ bool gameOver(int boardSize, game board[boardSize][boardSize]);
 
 void autoPlay(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip);
 
+void vsComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *exit, char *cmpInp);
+
+void vsMedComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *exit, char *cmpInp, int blkPts, int whtPts);
+
+void simGame (int boardSize, game board[boardSize][boardSize],
+            int whtPts, int blkPts, int *pos_x, int *pos_y, 
+            int cnt, int val_x[cnt], int val_y[cnt]);
 #endif

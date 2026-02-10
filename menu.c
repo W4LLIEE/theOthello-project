@@ -9,11 +9,15 @@
 
 struct termios oldt, newt;
 
-void computer(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
+void computer_easy(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
         int old_whtPts, int whtPts, bool firstSkip, game winner) {
+
+    bool invalid, exit;
+    char cmpInp[3];
 
     while (1) {
 
+        clrScr();
         scanValid(boardSize, board, curPlayer);
         old_blkPts = blkPts;
         old_whtPts = whtPts;
@@ -35,10 +39,80 @@ void computer(int boardSize, game board[boardSize][boardSize], game curPlayer, i
                     winner==BLACK ? "Black" : "White", blkPts, whtPts);
                 break;
             }
-        
-        autoPlay(boardSize, board, &curPlayer, &firstSkip);
+
+        if (blkPts+whtPts>4)
+            printf("\n  White played %s.\n", cmpInp);
+        vsComp (boardSize, board, &curPlayer, &firstSkip, &invalid, &exit, cmpInp);
         countScore(boardSize, board, &blkPts, &whtPts, &winner);
 
+        if (exit)
+            break;
+
+        if (invalid)
+            continue;
+        
+        if ((old_blkPts == blkPts) || (old_whtPts == whtPts)) {
+            printf("\n  SCORE\nBLACK : %d\t|\tWHITE : %d\n", blkPts, whtPts);
+            boardPrint(boardSize, board, curPlayer);
+            printf("  ERROR - NO PIECES FLIPPED");
+            break;
+        }
+
+        if (!((old_blkPts+old_whtPts+1)==(blkPts+whtPts))) {
+            printf("\n  SCORE\nBLACK : %d\t|\tWHITE : %d\n", blkPts, whtPts);
+            boardPrint(boardSize, board, curPlayer);
+            printf("  ERROR - PIECES DONT ADD UP");
+            break;
+        }
+        
+    }
+
+
+    return;
+}
+
+void computer_med(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
+        int old_whtPts, int whtPts, bool firstSkip, game winner) {
+
+    bool invalid, exit;
+    char cmpInp[3];
+
+    while (1) {
+
+        clrScr();
+        scanValid(boardSize, board, curPlayer);
+        old_blkPts = blkPts;
+        old_whtPts = whtPts;
+        printf("\n\n  SCORE\n  BLACK : %d\t|\tWHITE : %d\n\n", blkPts, whtPts);
+        boardPrint(boardSize, board, curPlayer);
+
+        if (gameOver(boardSize, board)){
+                if (firstSkip) {
+                    curPlayer = curPlayer == BLACK ? WHITE : BLACK;
+                    printf("\n  Turn Skipped.\n");
+                    firstSkip = false;
+                    continue;
+                }
+                if (winner==EMPTY) {
+                    printf("\n\n  TIE GAME\n\n");
+                    break;
+                }
+                printf("\n\n  GAME OVER\n\n  WINNER : %s\n     %d - %d\n", 
+                    winner==BLACK ? "Black" : "White", blkPts, whtPts);
+                break;
+            }
+
+        if (blkPts+whtPts>4)
+            printf("\n  White played %s.\n", cmpInp);
+        vsMedComp (boardSize, board, &curPlayer, &firstSkip, &invalid, &exit, cmpInp, blkPts, whtPts);
+        countScore(boardSize, board, &blkPts, &whtPts, &winner);
+
+        if (exit)
+            break;
+
+        if (invalid)
+            continue;
+        
         if ((old_blkPts == blkPts) || (old_whtPts == whtPts)) {
             printf("\n  SCORE\nBLACK : %d\t|\tWHITE : %d\n", blkPts, whtPts);
             boardPrint(boardSize, board, curPlayer);
@@ -121,6 +195,8 @@ void human(int boardSize, game board[boardSize][boardSize], game curPlayer, int 
 
 void rules() {
 
+    clrScr();
+
     printf("\n  ──────── Rules ────────\n\n");
     printf("  • Players take turns placing pieces\n");
     printf("  • Pieces must trap opponent pieces\n");
@@ -146,7 +222,11 @@ void disableRawMode() {
 }
 
 void clrScr() {
+
     printf("\033[2J\033[H");
+
+    //system("@cls||clear");
+
     return;
 }
 
@@ -158,7 +238,7 @@ void menuPrt1() {
     printf("          O T H E L L O\n");
     printf("  ──────────────────────────────\n\n");
     printf("          [ Play Game ]\n");
-    printf("            Play vs AI - In Development\n");
+    printf("            Play vs AI\n");
     printf("            Rules\n");
     printf("            Exit\n\n");
     printf("  ──────────────────────────────\n");
@@ -179,7 +259,7 @@ void menuPrt2() {
     printf("          O T H E L L O\n");
     printf("  ──────────────────────────────\n\n");
     printf("            Play Game\n");
-    printf("          [ Play vs AI ] - In Development\n");
+    printf("          [ Play vs AI ]\n");
     printf("            Rules\n");
     printf("            Exit\n\n");
     printf("  ──────────────────────────────\n");
@@ -200,7 +280,7 @@ void menuPrt3() {
     printf("          O T H E L L O\n");
     printf("  ──────────────────────────────\n\n");
     printf("            Play Game\n");
-    printf("            Play vs AI - In Development\n");
+    printf("            Play vs AI\n");
     printf("          [ Rules ]\n");
     printf("            Exit\n\n");
     printf("  ──────────────────────────────\n");
@@ -221,9 +301,9 @@ void menuPrt4() {
     printf("          O T H E L L O\n");
     printf("  ──────────────────────────────\n\n");
     printf("            Play Game\n");
-    printf("            Play vs AI - In Development\n");
+    printf("            Play vs AI\n");
     printf("            Rules\n");
-    printf("           [ Exit ]\n\n");
+    printf("          [ Exit ]\n\n");
     printf("  ──────────────────────────────\n");
     printf("        Black ●   White ○\n");
     printf("  ──────────────────────────────\n\n");
@@ -344,7 +424,7 @@ void subMenu(int boardSize,  game board[boardSize][boardSize], game curPlayer, i
     switch(sub) {
         case EASY:
             boardInit(boardSize, board);
-            computer(boardSize, board, curPlayer, old_blkPts, blkPts, old_whtPts, whtPts, firstSkip, winner);
+            computer_easy(boardSize, board, curPlayer, old_blkPts, blkPts, old_whtPts, whtPts, firstSkip, winner);
             printf("\n\n  RETURN TO MENU");
             enableRawMode();
             getchar();
@@ -352,7 +432,8 @@ void subMenu(int boardSize,  game board[boardSize][boardSize], game curPlayer, i
             return;
             break;
         case MEDIUM:
-            printf("\n\n  COMING SOON  \n");
+            boardInit(boardSize, board);
+            computer_med(boardSize, board, curPlayer, old_blkPts, blkPts, old_whtPts, whtPts, firstSkip, winner);
             printf("\n\n  RETURN TO MENU");
             enableRawMode();
             getchar();
