@@ -9,7 +9,7 @@
 bool checkValid(int boardSize, game board[boardSize][boardSize],
     int pos_x, int pos_y, game curPlayer);
 
-void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *exit);
+void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *quit);
 
 void scanValid(int boardSize, game board[boardSize][boardSize], game curPlayer);
 
@@ -22,9 +22,9 @@ bool gameOver(int boardSize, game board[boardSize][boardSize]);
 
 void autoPlay(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip);
 
-void vsComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *exit, char *cmpInp);
+void vsComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *quit, char *cmpInp);
 
-void vsMedComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *exit, char *cmpInp, int blkPts, int whtPts);
+void vsMedComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *quit, char *cmpInp, int blkPts, int whtPts);
 
 void simGame (int boardSize, game board[boardSize][boardSize],
             int whtPts, int blkPts, int *pos_x, int *pos_y, 

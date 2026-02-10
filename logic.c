@@ -50,18 +50,18 @@ bool checkValid(int boardSize, game board[boardSize][boardSize],
     } return false;
 }
 
-void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *exit) {
+void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *quit) {
     
     // Player moves
     int pos_x, pos_y;
     bool isValid;
     char ex[] = "ex", EX[] = "EX"; 
     *invalid = false;
-    *exit = false;
+    *quit = false;
 
     char input[3];
 
-    printf("\n  %s's turn. Make your move (Enter 'EX' to exit): ", 
+    printf("\n  %s's turn. Make your move (Enter 'EX' to quit): ", 
             *curPlayer == BLACK ? "Black" : "White");
 
     // Take and Check input
@@ -70,7 +70,7 @@ void Play(int boardSize, game board[boardSize][boardSize], game *curPlayer, bool
     while ((c = getchar()) != '\n' && c != EOF);
 
     if (strcmp(input, EX)==0 || strcmp(input, ex)==0) {
-        *exit=true;
+        *quit=true;
         return;
     }
     pos_x = input[0]-65;
@@ -222,7 +222,7 @@ void autoPlay(int boardSize, game board[boardSize][boardSize], game *curPlayer, 
     // Player moves
     int pos_x, pos_y, cnt=0, random;
     bool isValid;
-    int val_x[20], val_y[20];
+    int val_x[60], val_y[60];
 
     for (pos_y = 0; pos_y < boardSize; pos_y++) {
         
@@ -264,16 +264,16 @@ void autoPlay(int boardSize, game board[boardSize][boardSize], game *curPlayer, 
 
 }
 
-void vsComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *exit, char *cmpInp) {
+void vsComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *quit, char *cmpInp) {
 
 
     // Player moves
     int pos_x, pos_y, cnt=0, random;
     bool isValid;
-    int val_x[20], val_y[20];
+    int val_x[60], val_y[60];
     char input[3], ex[] = "ex", EX[] = "EX";
     *invalid = false;
-    *exit = false;
+    *quit = false;
 
     for (pos_y = 0; pos_y < boardSize; pos_y++) {
         
@@ -300,7 +300,7 @@ void vsComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, b
         
     } else if (*curPlayer == BLACK) {
 
-        printf("\n  %s's turn. Make your move (Enter 'EX' to exit): ", 
+        printf("\n  %s's turn. Make your move (Enter 'EX' to quit): ", 
                 *curPlayer == BLACK ? "Black" : "White");
 
         // Take and Check input
@@ -309,7 +309,7 @@ void vsComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, b
         while ((c = getchar()) != '\n' && c != EOF);
 
         if (strcmp(input, EX)==0 || strcmp(input, ex)==0) {
-            *exit=true;
+            *quit=true;
             return;
         }
         pos_x = input[0]-65;
@@ -338,7 +338,7 @@ void vsComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, b
 
 }
 
-void vsMedComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *exit, char *cmpInp, int blkPts, int whtPts) {
+void vsMedComp (int boardSize, game board[boardSize][boardSize], game *curPlayer, bool *firstSkip, bool *invalid, bool *quit, char *cmpInp, int blkPts, int whtPts) {
 
 
     // Player moves
@@ -347,7 +347,7 @@ void vsMedComp (int boardSize, game board[boardSize][boardSize], game *curPlayer
     int val_x[60], val_y[60];
     char input[3], ex[] = "ex", EX[] = "EX";
     *invalid = false;
-    *exit = false;
+    *quit = false;
 
     for (pos_y = 0; pos_y < boardSize; pos_y++) {
         
@@ -371,7 +371,7 @@ void vsMedComp (int boardSize, game board[boardSize][boardSize], game *curPlayer
         
     } else if (*curPlayer == BLACK) {
 
-        printf("\n  %s's turn. Make your move (Enter 'EX' to exit): ", 
+        printf("\n  %s's turn. Make your move (Enter 'EX' to quit): ", 
                 *curPlayer == BLACK ? "Black" : "White");
 
         // Take and Check input
@@ -380,7 +380,7 @@ void vsMedComp (int boardSize, game board[boardSize][boardSize], game *curPlayer
         while ((c = getchar()) != '\n' && c != EOF);
 
         if (strcmp(input, EX)==0 || strcmp(input, ex)==0) {
-            *exit=true;
+            *quit=true;
             return;
         }
         pos_x = input[0]-65;

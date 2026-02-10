@@ -12,7 +12,7 @@ struct termios oldt, newt;
 void computer_easy(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
         int old_whtPts, int whtPts, bool firstSkip, game winner) {
 
-    bool invalid, exit;
+    bool invalid, quit;
     char cmpInp[3];
 
     while (1) {
@@ -42,10 +42,10 @@ void computer_easy(int boardSize, game board[boardSize][boardSize], game curPlay
 
         if (blkPts+whtPts>4)
             printf("\n  White played %s.\n", cmpInp);
-        vsComp (boardSize, board, &curPlayer, &firstSkip, &invalid, &exit, cmpInp);
+        vsComp (boardSize, board, &curPlayer, &firstSkip, &invalid, &quit, cmpInp);
         countScore(boardSize, board, &blkPts, &whtPts, &winner);
 
-        if (exit)
+        if (quit)
             break;
 
         if (invalid)
@@ -74,7 +74,7 @@ void computer_easy(int boardSize, game board[boardSize][boardSize], game curPlay
 void computer_med(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
         int old_whtPts, int whtPts, bool firstSkip, game winner) {
 
-    bool invalid, exit;
+    bool invalid, quit;
     char cmpInp[3];
 
     while (1) {
@@ -104,10 +104,10 @@ void computer_med(int boardSize, game board[boardSize][boardSize], game curPlaye
 
         if (blkPts+whtPts>4)
             printf("\n  White played %s.\n", cmpInp);
-        vsMedComp (boardSize, board, &curPlayer, &firstSkip, &invalid, &exit, cmpInp, blkPts, whtPts);
+        vsMedComp (boardSize, board, &curPlayer, &firstSkip, &invalid, &quit, cmpInp, blkPts, whtPts);
         countScore(boardSize, board, &blkPts, &whtPts, &winner);
 
-        if (exit)
+        if (quit)
             break;
 
         if (invalid)
@@ -136,7 +136,7 @@ void computer_med(int boardSize, game board[boardSize][boardSize], game curPlaye
 void human(int boardSize, game board[boardSize][boardSize], game curPlayer, int old_blkPts, int blkPts,
         int old_whtPts, int whtPts, bool firstSkip, game winner) {
 
-    bool invalid, exit;
+    bool invalid, quit;
 
     while (1) {
 
@@ -163,11 +163,11 @@ void human(int boardSize, game board[boardSize][boardSize], game curPlayer, int 
                 break;
             }
         
-        Play(boardSize, board, &curPlayer, &firstSkip, &invalid, &exit);
+        Play(boardSize, board, &curPlayer, &firstSkip, &invalid, &quit);
         countScore(boardSize, board, &blkPts, &whtPts, &winner);
 
         
-        if (exit)
+        if (quit)
             break;
 
         if (invalid)
@@ -235,17 +235,17 @@ void menuPrt1() {
     clrScr();
     
     printf("\n  ──────────────────────────────\n");
-    printf("          O T H E L L O\n");
+    printf("          \033[93mO \033[35mT H \033[93mE \033[35mL L  \033[93mO\n\033[0m");
     printf("  ──────────────────────────────\n\n");
-    printf("          [ Play Game ]\n");
-    printf("            Play vs AI\n");
-    printf("            Rules\n");
-    printf("            Exit\n\n");
+    printf("          \033[93m[ \033[93mPlay \033[35mGame ]\n");
+    printf("            \033[93mPlay \033[35mvs AI\033[0m\n");
+    printf("            \033[35mRules\033[0m\n");
+    printf("            \033[93mExit\033[0m\n\n");
     printf("  ──────────────────────────────\n");
-    printf("        Black ●   White ○\n");
+    printf("        \033[93mBlack\033[0m ○   \033[93mWhite\033[0m ●\n");
     printf("  ──────────────────────────────\n\n");
     
-    //printf("\n\n  Select an Option (1-4) : ");
+    
 
     return;
 
@@ -256,17 +256,17 @@ void menuPrt2() {
     clrScr();
     
     printf("\n  ──────────────────────────────\n");
-    printf("          O T H E L L O\n");
+    printf("          \033[93mO \033[35mT H \033[93mE \033[35mL L  \033[93mO\n\033[0m");
     printf("  ──────────────────────────────\n\n");
-    printf("            Play Game\n");
-    printf("          [ Play vs AI ]\n");
-    printf("            Rules\n");
-    printf("            Exit\n\n");
+    printf("            \033[93mPlay \033[35mGame\n");
+    printf("          \033[35m[ \033[93mPlay \033[35mvs AI \033[93m]\n");
+    printf("            \033[35mRules\033[0m\n");
+    printf("            \033[93mExit\033[0m\n\n");
     printf("  ──────────────────────────────\n");
-    printf("        Black ●   White ○\n");
+    printf("        \033[93mBlack\033[0m ○   \033[93mWhite\033[0m ●\n");
     printf("  ──────────────────────────────\n\n");
     
-    //printf("\n\n  Select an Option (1-4) : ");
+    
 
     return;
 
@@ -277,17 +277,17 @@ void menuPrt3() {
     clrScr();
     
     printf("\n  ──────────────────────────────\n");
-    printf("          O T H E L L O\n");
+    printf("          \033[93mO \033[35mT H \033[93mE \033[35mL L  \033[93mO\n\033[0m");
     printf("  ──────────────────────────────\n\n");
-    printf("            Play Game\n");
-    printf("            Play vs AI\n");
-    printf("          [ Rules ]\n");
-    printf("            Exit\n\n");
+    printf("            \033[93mPlay \033[35mGame\033[0m\n");
+    printf("            \033[93mPlay \033[35mvs AI\033[0m\n");
+    printf("          \033[93m[ \033[35mRules ]\033[0m\n");
+    printf("            \033[93mExit\033[0m\n\n");
     printf("  ──────────────────────────────\n");
-    printf("        Black ●   White ○\n");
+    printf("        \033[93mBlack\033[0m ○   \033[93mWhite\033[0m ●\n");
     printf("  ──────────────────────────────\n\n");
     
-    //printf("\n\n  Select an Option (1-4) : ");
+    
 
     return;
 
@@ -298,17 +298,17 @@ void menuPrt4() {
     clrScr();
     
     printf("\n  ──────────────────────────────\n");
-    printf("          O T H E L L O\n");
+    printf("          \033[93mO \033[35mT H \033[93mE \033[35mL L  \033[93mO\n\033[0m");
     printf("  ──────────────────────────────\n\n");
-    printf("            Play Game\n");
-    printf("            Play vs AI\n");
-    printf("            Rules\n");
-    printf("          [ Exit ]\n\n");
+    printf("            \033[93mPlay \033[35mGame\033[0m\n");
+    printf("            \033[93mPlay \033[35mvs AI\033[0m\n");
+    printf("            \033[35mRules\033[0m\n");
+    printf("          \033[35m[ \033[93mExit ]\033[0m\n\n");
     printf("  ──────────────────────────────\n");
-    printf("        Black ●   White ○\n");
+    printf("        \033[93mBlack\033[0m ○   \033[93mWhite\033[0m ●\n");
     printf("  ──────────────────────────────\n\n");
     
-    //printf("\n\n  Select an Option (1-4) : ");
+    
 
     return;
 
@@ -318,11 +318,11 @@ void SubMenuPrt1() {
 
     clrScr();
 
-    printf("\n  ────── AI Difficulty ──────\n\n");
-    printf("          [ Easy ]\n");
-    printf("            Medium\n");
-    printf("            Hard (Coming Soon)\n");
-    printf("            Main Menu  \n");
+    printf("\n  ────── \033[35mAI Difficulty\033[0m ──────\n\n");
+    printf("          \033[93m[ \033[35mEasy ]\n");
+    printf("            \033[93mMedium\n");
+    printf("            \033[35mHard \033[0m(Coming Soon)\n");
+    printf("            \033[93mMain Menu\033[0m  \n");
     return;
 }
 
@@ -330,11 +330,11 @@ void SubMenuPrt2() {
 
     clrScr();
 
-    printf("\n  ────── AI Difficulty ──────\n\n");
-    printf("            Easy\n");
-    printf("          [ Medium ]\n");
-    printf("            Hard (Coming Soon)\n");
-    printf("            Main Menu  \n");
+    printf("\n  ────── \033[35mAI Difficulty\033[0m ──────\n\n");
+    printf("            \033[35mEasy\n");
+    printf("          [ \033[93mMedium ]\n");
+    printf("            \033[35mHard \033[0m(Coming Soon)\n");
+    printf("            \033[93mMain Menu\033[0m  \n");
     return;
 }
 
@@ -342,11 +342,11 @@ void SubMenuPrt3() {
 
     clrScr();
     
-    printf("\n  ────── AI Difficulty ──────\n\n");
-    printf("            Easy\n");
-    printf("            Medium\n");
-    printf("          [ Hard ] (Coming Soon)\n");
-    printf("            Main Menu  \n");
+    printf("\n  ────── \033[35mAI Difficulty\033[0m ──────\n\n");
+    printf("            \033[35mEasy\n");
+    printf("            \033[93mMedium\n");
+    printf("          [ \033[35mHard ]\033[0m (Coming Soon)\n");
+    printf("            \033[93mMain Menu\033[0m  \n");
     return;
 }
 
@@ -354,11 +354,11 @@ void SubMenuPrt4() {
 
     clrScr();
 
-    printf("\n  ────── AI Difficulty ──────\n\n");
-    printf("            Easy\n");
-    printf("            Medium\n");
-    printf("            Hard (Coming Soon)\n");
-    printf("          [ Main Menu ] \n");
+    printf("\n  ────── \033[35mAI Difficulty\033[0m ──────\n\n");
+    printf("            \033[35mEasy\n");
+    printf("            \033[93mMedium\n");
+    printf("            \033[35mHard \033[0m(Coming Soon)\n");
+    printf("          \033[35m[ \033[93mMain Menu ]\033[0m \n");
     return;
 }
 
@@ -390,7 +390,7 @@ void subMenu(int boardSize,  game board[boardSize][boardSize], game curPlayer, i
                 break;
         }
 
-        printf("\n\n\n  Navigate with UP/DOWN arrow keys\n  Enter to confirm option.");
+        //printf("\n\n\n  Navigate with UP/DOWN arrow keys\n  Enter to confirm option.");
         c = getchar();
 
         if (c == '\033') {
@@ -485,7 +485,7 @@ int menuRun(int optNum) {
                 break;
         }
 
-        printf("\n\n\n  Navigate with UP/DOWN arrow keys\n  Enter to confirm option.");
+        //printf("\n\n\n  Navigate with UP/DOWN arrow keys\n  Enter to confirm option.");
         c = getchar();
 
         if (c == '\033') {
