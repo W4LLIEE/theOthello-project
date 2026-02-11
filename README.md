@@ -1,67 +1,133 @@
-# theOthello-project
+# Othello (Reversi) – Terminal Edition
 
-## About
-**theOthello-project** is a personal programming project to build a **console-based Othello (Reversi) game in C**.
+A fully playable **Othello/Reversi** game written in C for the terminal.
 
-The repository is created early to capture planning, structure, and progress as the project evolves.
-
-At the moment, the project is in the **development phase**.
-
----
-
-## What the Project Is
-Othello is a two-player strategy board game played on an **8×8 grid**. Players take turns placing pieces on the board and capturing opponent pieces by surrounding them in straight lines (horizontal, vertical, or diagonal).
-
-This project aims to turn those rules into a clean, playable terminal application with clear logic and modular design.
+Features:
+- Human vs Human
+- Human vs Computer (basic AI)
+- Interactive terminal menu (arrow key navigation)
+- ANSI color support
+- Cross-platform build scripts (Windows + Linux/macOS)
 
 ---
 
-## Planned Core Features
-The first milestone is a complete, stable **Human vs Human** game:
+## 📦 Requirements
 
-- 8×8 board stored as a 2D array
-- Turn-based gameplay via the terminal
-- Full move validation in all 8 directions
-- Automatic piece flipping
-- Turn skipping when a player has no valid moves
-- Game-over detection
-- Score counting and winner display
-- Clear separation of logic using functions
+- GCC (or compatible C compiler)
+- UTF-8 capable terminal
+- ANSI escape code support
 
 ---
 
-## Planned Extensions
-Once the core game is solid, additional features may be added:
+## 🚀 Quick Start
 
-- Highlighting valid moves
-- Piece counters during gameplay
-- Last-move indicator
-- Undo functionality
-- Human vs AI mode
-- Improved board rendering
-- Cleaner menus and input handling
+### Linux / macOS
 
-These features will be layered on top of the core logic without breaking it.
+Install GCC if needed:
 
----
+```bash
+# Ubuntu / Debian
+sudo apt install build-essential
 
-## Project Approach
-- Build a stable core first
-- Add features incrementally
-- Refactor when needed instead of rushing
-- Keep the code readable and maintainable
-- Track progress through meaningful commits
+# Fedora
+sudo dnf install gcc
 
----
+# Arch
+sudo pacman -S gcc
 
-## Current Status
-**Early planning**
+# macOS (Homebrew)
+brew install gcc
+```
 
-- Repository initialized
-- Feature ideas defined
-- Implementation not started yet
+Build and run:
+
+```bash
+chmod +x build.sh run.sh
+./build.sh
+./run.sh
+```
 
 ---
 
-## Future Notes
-This project may evolve beyond the original plan as ideas come up during development. The goal is to learn by building, breaking, and improving — not to rush to a finished result.
+### Windows
+
+Install GCC via:
+- MinGW
+- MSYS2
+- WSL (recommended)
+
+Verify installation:
+
+```bash
+gcc --version
+```
+
+Build:
+
+```bat
+build.bat
+```
+
+Run:
+
+```bat
+run.bat
+```
+
+---
+
+## 🎮 Controls
+
+### Menu
+- ↑ / ↓ Arrow Keys → Navigate
+- Enter → Confirm
+
+### Gameplay
+- Enter board coordinates (e.g. `A1`)
+- Valid moves are shown automatically
+- Turns skip if no valid moves
+- Game ends when no moves remain
+
+---
+
+## 🧠 Technical Details
+
+- Modular structure (`board`, `logic`, `menu`)
+- ANSI escape codes for screen control
+- `termios` raw mode for real-time input
+- AI selects move based on maximum immediate gain
+- Score validation and integrity checks included
+
+---
+
+## 📁 Project Structure
+
+```
+.
+├── main.c
+├── board.c
+├── logic.c
+├── menu.c
+├── board.h
+├── logic.h
+├── menu.h
+├── build.sh
+├── build.bat
+├── run.sh
+├── run.bat
+└── README.md
+```
+
+---
+
+## ⚠ Notes
+
+- Raw mode input requires a POSIX-compatible terminal.
+- Windows users are recommended to use Windows Terminal or WSL.
+- ANSI colors may not display properly in legacy terminals.
+
+---
+
+## 📜 License
+
+This project is for educational purposes.
