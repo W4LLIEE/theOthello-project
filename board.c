@@ -7,23 +7,23 @@
 #include <time.h>
 #include <string.h>
 
-char tochar(game b) {
+char * tochar(game b) {
     switch (b)
     {
     case EMPTY:
-        return '.';
+        return "\033[1;97m.\033[0m";
         break;
     case BLACK:
-        return 'X';
+        return "○";
         break;
     case WHITE:
-        return 'O';
+        return "●";
         break;
     case VALID:
-        return '*';
+        return "*";
         break;
     default:
-        return '?';
+        return "?";
         break;
 }
 }
@@ -76,7 +76,7 @@ void boardPrint(int boardSize, game board[boardSize][boardSize], game curPlayer)
         printf("  %d  ", pos_y+1);
         
         for (pos_x = 0; pos_x < boardSize; pos_x++) {
-            printf("%c ", tochar(board [pos_x][pos_y]));
+            printf("%s ", tochar(board [pos_x][pos_y]));
         }
         
         printf("\n");

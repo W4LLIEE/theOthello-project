@@ -6,7 +6,7 @@
 
 typedef enum game {EMPTY, BLACK, WHITE, VALID} game;
 
-char tochar(game b);
+char * tochar(game b);
 
 void boardInit(int boardSize, game board[boardSize][boardSize]);
 
